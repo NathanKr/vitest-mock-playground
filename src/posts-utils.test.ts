@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { createPost, getPosts } from "./posts-utils";
-import axios from 'axios'
+import axios from "axios";
 import { IPost } from "./IPost";
 
 describe("axios with mock tests", () => {
@@ -8,7 +8,7 @@ describe("axios with mock tests", () => {
     vi.mock("axios", () => ({
       default: {
         get: vi.fn(),
-        post: vi.fn()
+        post: vi.fn(() => Promise.resolve({ data: {} })) // success
       },
     }));
   });
@@ -20,18 +20,23 @@ describe("axios with mock tests", () => {
   test("test axios.get is called once", async () => {
     await getPosts();
     expect(axios.get).toBeCalled();
-    expect(axios.get).toHaveBeenCalledWith("https://jsonplaceholder.typicode.com/posts");
+    expect(axios.get).toHaveBeenCalledWith(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
   });
 
   test("test axios.post is called once", async () => {
-    const body : IPost = {
+    const body: IPost = {
       userId: 0,
       id: 0,
       title: "title",
-      body: "body text"
-    }
+      body: "body text",
+    };
     await createPost();
     expect(axios.post).toBeCalled();
-    expect(axios.post).toHaveBeenCalledWith("https://jsonplaceholder.typicode.com/posts",body);
+    expect(axios.post).toHaveBeenCalledWith(
+      "https://jsonplaceholder.typicode.com/posts",
+      body
+    );
   });
 });
