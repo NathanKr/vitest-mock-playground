@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { createPost, getPosts } from "./posts-utils";
+import { createPost, getPosts } from "../logic/posts-utils";
 import axios from "axios";
-import { IPost } from "./IPost";
+import { IPost } from "../types/IPost";
 
 describe("axios with mock tests", () => {
   beforeEach(() => {
     vi.mock("axios", () => ({
       default: {
         get: vi.fn(),
-        post: vi.fn(() => Promise.resolve({ data: {} })) // success
+        post: vi.fn(() => Promise.resolve({ data: {} })), // success
       },
     }));
   });

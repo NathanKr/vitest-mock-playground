@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { IPost } from "./IPost";
+import { IPost } from "../types/IPost";
 
 const url = "https://jsonplaceholder.typicode.com/posts";
 
